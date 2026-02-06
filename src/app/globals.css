@@ -1,30 +1,244 @@
+/* src/app/globals.css */
 @import "tailwindcss";
 
 @theme {
-  /* On définit tes couleurs ici */
   --color-mesaBlack: #121212;
   --color-mesaDark: #1E1E1E;
   --color-mesaGold: #F0C450;
   --color-mesaGray: #B0B0B0;
+  --color-mesaRed: #D32F2F;
+  --color-mesaWhite: #F5F5F5;
 
-  /* On définit tes polices */
-  --font-serif: var(--font-playfair), serif;
-  --font-sans: var(--font-montserrat), sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 }
 
-/* Le fond du site */
 body {
-  background-color: var(--color-mesaBlack);
+  @apply bg-mesaBlack text-white antialiased;
   background-image: radial-gradient(circle at top right, #1E1E1E 0%, #121212 100%);
-  color: #ffffff;
+  position: relative;
+  overflow-x: hidden;
 }
 
-/* Ton animation */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Texture granuleuse premium */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .glass-effect {
+    @apply bg-[#121212]/90 backdrop-blur-xl border-b border-mesaGold/10;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Ornate Card with Gold Border */
+  .ornate-card {
+    position: relative;
+    border: 2px solid rgba(240, 196, 80, 0.2);
+    box-shadow:
+      0 0 20px rgba(240, 196, 80, 0.1),
+      inset 0 0 20px rgba(240, 196, 80, 0.05);
+  }
+
+  .ornate-card::before {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, transparent, rgba(240, 196, 80, 0.1), transparent);
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .ornate-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Ornate Border for Buttons */
+  .ornate-border {
+    position: relative;
+    border: 2px solid rgba(240, 196, 80, 0.3);
+  }
+
+  .ornate-border::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border: 1px solid rgba(240, 196, 80, 0.2);
+    border-radius: inherit;
+    pointer-events: none;
+  }
+}
+
+/* Smooth Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.8s ease-out forwards;
+  animation: fade-in 0.8s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.6s ease-out;
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+/* Smooth Scroll with Navbar Offset */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+  /* Offset for fixed navbar */
+}
+
+/* Improved Focus States for Accessibility */
+*:focus-visible {
+  outline: 2px solid #F0C450;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #F0C450;
+  outline-offset: 4px;
+}
+
+/* Parallax Effect Helper */
+.parallax-slow {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #121212;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F0C450;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #f5d470;
+}
+
+/* Mobile Menu Animation */
+.mobile-menu-enter {
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mobile-menu-enter-active {
+  transform: translateX(0);
+}
+
+/* Hover Effects for Cards - Enhanced 3D */
+.menu-card-hover {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, box-shadow;
+}
+
+.menu-card-hover:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 60px rgba(240, 196, 80, 0.25), 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Pulse animation for interactive elements */
+@keyframes pulse-subtle {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.hover-pulse:hover {
+  animation: pulse-subtle 1s ease-in-out infinite;
 }

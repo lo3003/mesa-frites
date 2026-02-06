@@ -31,6 +31,34 @@ export const MENU_DATA: MenuCategory[] = [
     ]
   },
   {
+    id: 'special',
+    title: 'Les Spécialités du Chef',
+    items: [
+      {
+        id: 'philly',
+        name: "Le Philly Cheese Steak",
+        description: "Le vrai goût des US : Lamelles de bœuf grillées, oignons caramélisés, inondés de fromage fondu.",
+        priceSolo: 13.50,
+        priceMenu: 16.50,
+        isNew: true
+      },
+      {
+        id: 'pitta-poulet',
+        name: "Pita Poulet",
+        description: "La référence : Poulet mariné aux épices douces, crudités fraîches et notre sauce blanche maison.",
+        priceSolo: 9.00,
+        priceMenu: 12.00
+      },
+      {
+        id: 'pitta-porc',
+        name: "Pita Porc",
+        description: "Authentique Gyros de porc grillé, oignons rouges, tomates, tzatziki.",
+        priceSolo: 9.00,
+        priceMenu: 12.00
+      }
+    ]
+  },
+  {
     id: 'frites',
     title: 'Frites Fraîches',
     items: [
